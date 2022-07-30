@@ -1,0 +1,60 @@
+.toast 
+  padding: 10px 20px 10px
+  border-radius: 5px
+  box-shadow: 4px 4px 7px -2px rgba(0, 0, 0, 0.4)
+  position: relative
+  display: grid
+  grid-template-areas: "icon title" "icon message"
+  grid-template-columns: 25px auto
+  gap: 5px
+  min-width: 110px
+  max-width: 500px
+  &_error
+    background-color: rgb(253, 237, 237)
+  &_success
+    background-color: rgb(237, 247, 237)
+  &_message
+    background-color: rgb(229, 246, 253)
+  &_warning
+    background-color: rgb(255, 244, 229)
+  &__code
+    font-size: 1rem
+    padding: 0
+    margin: 0
+    grid-area: title
+    font-weight: 400
+    font-weight: 500
+    text-transform: capitalize
+  &__text
+    word-break: break-all
+    padding: 0
+    margin: 0
+  &__code, &__text
+    &_error
+      color: rgb(95, 33, 32)
+    &_success
+      color: rgb(30, 70, 32)
+    &_message
+      color: rgb(1, 67, 97)
+    &_warning
+      color: rgb(102, 60, 0)
+  &__icon
+    fill: currentcolor
+    width: 20px
+    grid-area: icon
+    &_error
+      color: rgb(239, 83, 80)
+    &_success
+      color: rgb(76, 175, 80)
+    &_message
+      color: rgb(3, 169, 244)
+    &_warning
+      color: rgb(255, 152, 0)
+  &_message
+    grid-area: message
+  &__times
+    position: absolute
+    top: 0
+    right: 5px
+    font-size: 1.4rem
+    cursor: pointer

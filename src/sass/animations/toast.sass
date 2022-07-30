@@ -1,0 +1,21 @@
+.toast-anim
+  &-enter
+    opacity: 0
+    transform: translateX(-100%)
+  &-enter-active 
+    opacity: 1
+    transform: translateX(0)
+    transition: all $DEFAULT_CSS_TIMEOUT
+  &-exit
+    opacity: 1
+  &-exit-active
+    opacity: 0
+    transform: translateX(-100%)
+    transition: all $DEFAULT_CSS_TIMEOUT
+
+  
+.toast-list
+  display: flex
+  flex-direction: column
+  justify-content: space-between
+  gap: 10px
