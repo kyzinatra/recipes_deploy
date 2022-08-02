@@ -1,0 +1,42 @@
+.form
+  gap: 20px
+  display: grid
+  @media screen and (width <= 700px)
+      gap: 30px
+  &__group
+    border: none
+    display: grid
+    gap: 20px
+    padding: 0
+    margin: 0
+    @media screen and (width <= 700px)
+      gap: 30px
+  &__title
+    margin: 0
+    padding: 0
+    font-size: 1.8rem
+  &__main
+    grid-template-areas: "title link"
+    @media screen and (width <= 600px)
+      grid-template-areas: "title" "link"
+  &__compound
+    grid-template-areas: "title link"
+    grid-template-columns: 1fr 1fr
+    @media screen and (width <= 600px)
+      grid-template-areas: "title" "link"
+      grid-template-columns: 1fr
+.main
+  padding-top: 40px
+  display: grid
+  gap: 40px
+
+.section
+  width: 70%
+  padding: 10px
+  margin: auto
+  display: grid
+  gap: 60px
+  @media screen and (width <= 1000px)
+    width: 90%
+  @media screen and (width <= 650px)
+    width: 100%

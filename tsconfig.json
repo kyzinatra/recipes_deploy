@@ -97,6 +97,6 @@
 		"resolveJsonModule": true,
 		"isolatedModules": true
 	},
-	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "test.js", "firebase.config.ts"],
 	"exclude": ["node_modules"]
 }

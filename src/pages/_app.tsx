@@ -3,6 +3,7 @@ import type { AppProps } from "next/app";
 import "../sass/index.sass";
 import { store } from "../services";
 import { Provider } from "react-redux";
+import "../index";
 
 function MyApp({ Component, pageProps }: AppProps) {
 	return (

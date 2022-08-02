@@ -1,10 +1,47 @@
 $DEFAULT_CSS_TIMEOUT: 200ms
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,500&display=swap')
+@import "materialize-css/sass/materialize.scss"
+@import "materialize-css/sass/components/_variables.scss"
+@import "materialize-css/sass/components/forms/_input-fields.scss"
+@import "materialize-css/sass/components/forms/_forms.scss"
+@import "materialize-css/sass/components/_chips.scss"
+@import "materialize-css/sass/components/_icons-material-design.scss"
 @import "./normalize.sass"
 @import "./animations/toast"
 
-html  
-  font-size: 15px
+.chips.chips-autocomplete.focus
+  border-bottom: 1px solid #CDF7FF!important
+  box-shadow: 0 1px 0 0 #CDF7FF!important
+
+.chip
+  font-size: 1rem!important
+
+html
+  font-size: 18px
+  color: black
+  height: 100%
+  @media screen and (max-width: 1200px)
+    font-size: 16px
 
 body
+  margin: 0
+  padding: 0
   font-family: 'Roboto', sans-serif
+  font-size: 18px
+  background: #f3f9ff
+
+*,
+*:before,
+*:after
+  box-sizing: border-box
+
+h1,h2,h3,h4,h5,h6
+  margin: 0
+
+a
+  text-decoration: none
+
+ul,li
+  margin: 0
+  padding: 0
+  list-style-type: none

@@ -1,3 +1,11 @@
 import React from "react";
+// * STATS
 
-import "./index.sass";
+import { getLCP, getFID, getCLS } from "web-vitals";
+
+if (typeof window != "undefined") {
+	console.log("START");
+	getCLS(console.log, true);
+	getFID(console.log, true);
+	getLCP(console.log, true);
+}
