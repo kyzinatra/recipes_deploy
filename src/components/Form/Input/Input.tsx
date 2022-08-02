@@ -9,6 +9,7 @@ interface IInput {
 	type?: string;
 	width?: string;
 	required?: boolean;
+	icon?: string;
 }
 
 const Input: FC<IInput> = ({
@@ -18,9 +19,11 @@ const Input: FC<IInput> = ({
 	type = "text",
 	width = "auto",
 	required,
+	icon,
 }) => {
 	return (
 		<div className={clx(style.input, className, "input-field")}>
+			<i className="material-icons prefix">{icon}</i>
 			<label htmlFor={id} className={clx("validate")}>
 				{children}
 			</label>

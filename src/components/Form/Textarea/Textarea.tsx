@@ -11,6 +11,7 @@ interface ITextarea {
 const Textarea: FC<ITextarea> = ({ children, id }) => {
 	return (
 		<div className={clx("input-field", style.textarea)}>
+			<i className="material-icons prefix">mode_edit</i>
 			<textarea
 				style={{ height: "0px" }}
 				id={id}

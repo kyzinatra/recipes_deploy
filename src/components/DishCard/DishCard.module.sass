@@ -1,0 +1,38 @@
+.card
+  max-width: 260px
+  box-shadow: 0 0  10px -4px rgba(0, 0, 0, 0.5)
+  border-radius: 5px
+  padding: 20px
+  align-self: stretch
+  display: flex
+  flex-direction: column
+  justify-content: flex-start
+  color: inherit
+  gap: 15px
+  transition: box-shadow 100ms linear
+  &:hover
+    box-shadow: 0 0  10px -6px rgba(0, 0, 0, 0.5)
+  @media screen and (width <= 500px)
+    width: 90%
+    max-width: initial
+  &__title
+    font-size: 1.2rem
+    text-transform: capitalize
+    font-weight: 500
+    margin: 0
+  &__content
+    font-size: 0.85rem
+    font-weight: 300
+    max-height: 200px
+    overflow: hidden
+    text-overflow: ellipsis
+    margin: 5px 0
+  &__link
+    flex-grow: 2
+    display: flex
+    align-items: flex-end
+    color: #039be5
+    cursor: pointer
+    button
+      margin: 0 auto
+      width: 100%

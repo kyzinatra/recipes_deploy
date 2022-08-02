@@ -11,14 +11,14 @@ const Main = () => {
 				<section className={style.cards}>
 					<Card href="/search">
 						<div className={style.cards__icon}>
-							<img src="main/icons/search.svg" alt="" />
+							<img src="icons/search.svg" alt="" />
 						</div>
 						<h1 className={style.cards__head}>Поиск блюд</h1>
 						<p className={style.cards__content}>Гибкий поиск блюд по фильтрам и категориям</p>
 					</Card>
 					<Card href="/list">
 						<div className={style.cards__icon}>
-							<img src="main/icons/list.svg" alt="" />
+							<img src="icons/list.svg" alt="" />
 						</div>
 						<h1 className={style.cards__head}>Список блюд</h1>
 						<p className={style.cards__content}>
@@ -27,7 +27,7 @@ const Main = () => {
 					</Card>
 					<Card href="/add">
 						<div className={style.cards__icon}>
-							<img src="main/icons/add.svg" alt="" />
+							<img src="icons/add.svg" alt="" />
 						</div>
 						<h1 className={style.cards__head}>Добавить новое блюдо</h1>
 						<p className={style.cards__content}>
