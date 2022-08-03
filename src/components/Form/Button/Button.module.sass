@@ -4,11 +4,24 @@
   border: none
   border-radius: 5px
   cursor: pointer
-  transition: background-color .1s ease!important
+  transition: background-color .1s ease
   color: #202020
   &:hover, &:focus
-    background-color: #a3e2ff!important
+    background-color: #a3e2ff
   &:active
-    background-color: #cdf7ff!important
+    background-color: #cdf7ff
+  &:disabled
+    background-color: #d8eaff
+    &:hover, &:focus, &:active
+      background-color: #d8eaff
   @media screen and (width <= 650px)
     height: 60px!important
+
+.load
+  animation: 1.5s loop infinite linear
+
+@keyframes loop
+  0%
+    transform: rotate(0)
+  100%
+    transform: rotate(-360deg)

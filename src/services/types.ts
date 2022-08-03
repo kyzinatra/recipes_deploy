@@ -5,6 +5,13 @@ export type TInitialState = {
 	timeout?: number;
 	id?: string;
 };
+
+export type TCardsInitialState = {
+	cards: Card[];
+	pedding: boolean;
+	reject: boolean;
+	success: boolean;
+};
 export type TNames = {
 	types: string[];
 	compound: string[];
@@ -24,10 +31,18 @@ export type Card = {
 	date: number;
 	description: null | string;
 	dishTypes: null | string[];
-	ipAdress: null | string;
 	link: null | string;
 	name: string;
 	productTypes: null | string[];
-	userAgent: null | string;
 	id: string;
 };
+
+export type TFrom = {
+	description: null | string;
+	dishTypes: null | string[];
+	name: string;
+	productTypes: null | string[];
+	link: null | string;
+};
+
+export type TFromKeys = keyof TFrom;

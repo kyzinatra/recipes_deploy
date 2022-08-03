@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { ChangeEvent, FC } from "react";
 import { clx } from "../../../utils/classCombine";
 import style from "./Input.module.sass";
 
@@ -10,6 +10,8 @@ interface IInput {
 	width?: string;
 	required?: boolean;
 	icon?: string;
+	onChange?: (event: ChangeEvent<HTMLInputElement>) => any;
+	value?: string;
 }
 
 const Input: FC<IInput> = ({
@@ -20,6 +22,8 @@ const Input: FC<IInput> = ({
 	width = "auto",
 	required,
 	icon,
+	onChange,
+	value,
 }) => {
 	return (
 		<div className={clx(style.input, className, "input-field")}>
@@ -27,7 +31,14 @@ const Input: FC<IInput> = ({
 			<label htmlFor={id} className={clx("validate")}>
 				{children}
 			</label>
-			<input type={type} id={id} style={{ minWidth: width }} required={required || false} />
+			<input
+				onChange={onChange}
+				type={type}
+				id={id}
+				value={value}
+				style={{ minWidth: width }}
+				required={required || false}
+			/>
 		</div>
 	);
 };

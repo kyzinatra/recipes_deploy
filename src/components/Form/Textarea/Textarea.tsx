@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { ChangeEvent, FC } from "react";
 import { clx } from "../../../utils/classCombine";
 
 import style from "./Textarea.module.sass";
@@ -6,9 +6,11 @@ import style from "./Textarea.module.sass";
 interface ITextarea {
 	children?: React.ReactNode;
 	id: string;
+	onChange?: (event: ChangeEvent<HTMLTextAreaElement>) => any;
+	value?: string;
 }
 
-const Textarea: FC<ITextarea> = ({ children, id }) => {
+const Textarea: FC<ITextarea> = ({ children, id, onChange, value }) => {
 	return (
 		<div className={clx("input-field", style.textarea)}>
 			<i className="material-icons prefix">mode_edit</i>
@@ -16,6 +18,8 @@ const Textarea: FC<ITextarea> = ({ children, id }) => {
 				style={{ height: "0px" }}
 				id={id}
 				className={clx("materialize-textarea", style.textarea__input)}
+				onChange={onChange}
+				value={value}
 			></textarea>
 			<label htmlFor={id} className={style.textarea__label}>
 				{children}

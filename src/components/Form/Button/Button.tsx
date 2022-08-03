@@ -6,12 +6,14 @@ interface IButton {
 	children: React.ReactNode;
 	type?: "reset" | "submit" | "button";
 	className?: string;
+	load?: boolean;
 }
 
-const Button: FC<IButton> = ({ children, type = "button", className }) => {
+const Button: FC<IButton> = ({ children, type = "button", className, load }) => {
 	return (
-		<button type={type} className={clx(style.button, className)}>
-			{children}
+		<button type={type} disabled={load} className={clx(style.button, className)}>
+			{!load && children}
+			{load && <i className={clx("material-icons", style.load)}>sync</i>}
 		</button>
 	);
 };
