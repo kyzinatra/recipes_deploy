@@ -8,10 +8,17 @@ export type TInitialState = {
 
 export type TCardsInitialState = {
 	cards: Card[];
-	pedding: boolean;
+	pending: boolean;
 	reject: boolean;
 	success: boolean;
 };
+
+export type TDetailsInitialState = {
+	pending: boolean;
+	reject: boolean;
+	success: boolean;
+};
+
 export type TNames = {
 	types: string[];
 	compound: string[];

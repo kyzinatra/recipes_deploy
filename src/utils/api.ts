@@ -16,3 +16,10 @@ export async function postFetch(url: string, body: Object) {
 		body: JSON.stringify(body),
 	}).then(chechRes);
 }
+
+export async function deleteFetch(url: string) {
+	return fetch(url, {
+		method: "DELETE",
+		redirect: "follow",
+	}).then(chechRes);
+}

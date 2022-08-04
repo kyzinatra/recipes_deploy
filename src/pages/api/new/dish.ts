@@ -13,8 +13,8 @@ export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 		const newDish = { ...req.body, date: Date.now() } as Card;
 		await setDoc(doc(db, "cards", newId), newDish);
 		res.revalidate("/add");
-		res.revalidate("/list");
-		res.revalidate("/search");
+		// res.revalidate("/list");
+		// res.revalidate("/search");
 		res.status(200).json({ msg: "Dish added successfully", id: newId, card: newDish });
 	} catch (e) {
 		res.status(403).json({ error: "DB Adding Error" });

@@ -11,7 +11,9 @@ interface ILayout {
 
 const Layout: FC<ILayout> = ({ children }) => {
 	const path = useRouter().pathname.split("/").at(-1) || "";
-	const title = (path[0]?.toUpperCase() || "") + path?.substring(1) + " dishes";
+	let title = "";
+	if (path.startsWith("[") && path.endsWith("]")) title = "Dishes";
+	else title = (path[0]?.toUpperCase() || "") + path?.substring(1) + " dishes";
 	return (
 		<div>
 			<Head>

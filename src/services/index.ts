@@ -5,9 +5,10 @@ import { toastReducer } from "./slices/toasts";
 import { cardReducer } from "./slices/cards";
 
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import { detailsReducer } from "./slices/details";
 
 export const store = configureStore({
-	reducer: { toasts: toastReducer, cards: cardReducer },
+	reducer: { toasts: toastReducer, cards: cardReducer, details: detailsReducer },
 	devTools: process.env.NODE_ENV === "development",
 });
 

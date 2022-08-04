@@ -1,24 +1,22 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { postFetch } from "../../utils/api";
-import { Card, TCardsInitialState, TFrom } from "../types";
+import { deleteFetch } from "../../utils/api";
+import { Card, TDetailsInitialState, TFrom } from "../types";
 import { ADD_TOAST } from "./toasts";
 type Res = { id: string; msg: string; card: Card };
 
-const initialState: TCardsInitialState = {
-	cards: [],
+const initialState: TDetailsInitialState = {
 	pending: false,
 	reject: false,
 	success: false,
 };
 
-const fetchCard = createAsyncThunk(
-	"cards/fetchCard",
-	async (form: TFrom, { dispatch, fulfillWithValue, rejectWithValue }) => {
+const deleteCard = createAsyncThunk(
+	"details/deleteCard",
+	async (id: string, { dispatch, fulfillWithValue, rejectWithValue }) => {
 		try {
-			const res: Res = await postFetch("api/new/dish", form);
+			const res: Res = await deleteFetch("../api/delete/" + id);
 			dispatch(ADD_TOAST({ message: res.msg, code: 200, style: "success" }));
-			fulfillWithValue({ ...res.card, id: res.id });
-			return { ...res.card, id: res.id };
+			return;
 		} catch (err) {
 			dispatch(
 				ADD_TOAST({ message: (err as Error).message || "Error", code: 403, style: "error" })
@@ -28,28 +26,26 @@ const fetchCard = createAsyncThunk(
 		}
 	}
 );
-// setAddCards((last) => [{ ...res.card, id: res.id }, ...last]);
-//
-const cardSlice = createSlice({
-	name: "cards",
+
+const details = createSlice({
+	name: "details",
 	initialState,
 	reducers: {},
 	extraReducers: (builder) => {
 		builder
-			.addCase(fetchCard.fulfilled, (state, action) => {
+			.addCase(deleteCard.fulfilled, (state, action) => {
 				state.pending = false;
 				state.reject = false;
 				state.success = true;
-				if (action.payload != undefined) state.cards = [action.payload, ...state.cards];
 				return state;
 			})
-			.addCase(fetchCard.pending, (state, action) => {
+			.addCase(deleteCard.pending, (state, action) => {
 				state.pending = true;
 				state.reject = false;
 				state.success = false;
 				return state;
 			})
-			.addCase(fetchCard.rejected, (state, action) => {
+			.addCase(deleteCard.rejected, (state, action) => {
 				state.pending = false;
 				state.reject = true;
 				state.success = false;
@@ -59,6 +55,6 @@ const cardSlice = createSlice({
 });
 
 // export const {} = cardSlice.actions;
-export { fetchCard };
+export { deleteCard };
 
-export const cardReducer = cardSlice.reducer;
+export const detailsReducer = details.reducer;
