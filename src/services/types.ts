@@ -53,3 +53,8 @@ export type TFrom = {
 };
 
 export type TFromKeys = keyof TFrom;
+
+export type TAutocomplete = {
+	compound: string[];
+	types: string[];
+};

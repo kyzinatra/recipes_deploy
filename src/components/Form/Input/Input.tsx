@@ -27,7 +27,7 @@ const Input: FC<IInput> = ({
 }) => {
 	return (
 		<div className={clx(style.input, className, "input-field")}>
-			<i className="material-icons prefix">{icon}</i>
+			{icon && <i className="material-icons prefix">{icon}</i>}
 			<label htmlFor={id} className={clx("validate")}>
 				{children}
 			</label>

@@ -1,0 +1,43 @@
+.main 
+  width: 80%
+  margin: 0 auto
+  display: flex
+  flex-direction: column
+  gap: 40px
+  @media screen and (width <= 700px)
+    width: 90%
+  @media screen and (width <= 500px)
+    width: 95%
+  &__title
+    font-weight: 500
+    margin-top: 50px
+    @media screen and (width <= 600px)
+      font-size: 1.3rem
+
+.list
+  display: flex
+  flex-wrap: wrap
+  justify-content: space-around
+  gap: 35px
+  &__names
+    list-style: inside
+
+.name-card
+  margin-bottom: 40px
+  list-style: inside
+  list-style-type: inside !important
+  h2
+    font-size: 1.2rem
+    display: inline-block
+    color: #020202
+  p
+    max-width: 40%
+    white-space: nowrap
+    overflow: hidden
+    text-overflow: ellipsis
+    margin: 5px 0 20px 0
+    font-weight: 300
+    @media screen and (width <= 700px)
+      max-width: 70%
+    @media screen and (width <= 500px)
+      max-width: 80%
