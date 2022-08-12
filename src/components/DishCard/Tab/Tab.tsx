@@ -1,5 +1,4 @@
 import React, { FC } from "react";
-import style from "./Tab.module.sass";
 
 interface ITab {
 	children: React.ReactNode;

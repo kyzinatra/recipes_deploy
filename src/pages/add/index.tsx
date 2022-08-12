@@ -4,6 +4,9 @@ import Chips from "../../components/Form/Chips/Chips";
 import Input from "../../components/Form/Input/Input";
 import Textarea from "../../components/Form/Textarea/Textarea";
 import Layout from "../../components/Layout/Layout";
+import DishCard from "../../components/DishCard/DishCard";
+import Cards from "../../components/DishCard/Cards/Cards";
+
 import { clx } from "../../utils/classCombine";
 
 import style from "./index.module.sass";
@@ -11,12 +14,10 @@ import style from "./index.module.sass";
 import { useAppDispatch, useAppSelector } from "../../services";
 import { ADD_TOAST } from "../../services/slices/toasts";
 import { Card, TEditFrom, TFrom, TFromKeys, TProps } from "../../services/types";
-import DishCard from "../../components/DishCard/DishCard";
-import Cards from "../../components/DishCard/Cards/Cards";
+
 import { staticResult, TNames } from "../../services/types";
 import { collection, doc, getDoc, getDocs, limit, orderBy, query } from "firebase/firestore/lite";
 import { db } from "../../../firebase.config";
-
 import { fetchCard } from "../../services/slices/cards";
 import { removeSimmular } from "../../utils/find";
 import { editCard, reset, setField, setFrom } from "../../services/slices/details";

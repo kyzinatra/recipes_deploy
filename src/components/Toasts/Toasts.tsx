@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { createPortal } from "react-dom";
 import { TransitionGroup } from "react-transition-group";
-import { useAppDispatch, useAppSelector } from "../../services";
+import { useAppSelector } from "../../services";
 import Toast from "./Toast/Toast";
 import style from "./Toasts.module.sass";
 

@@ -1,7 +1,6 @@
 import { setDoc, doc, getDoc } from "firebase/firestore/lite";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { db } from "../../../../firebase.config";
-import { v4 as uuidv4 } from "uuid";
 import { Card, TAutocomplete, TEditFrom } from "../../../services/types";
 type Data = { error: string } | { msg: "Dish updated successfully"; id: string; card: Card };
 

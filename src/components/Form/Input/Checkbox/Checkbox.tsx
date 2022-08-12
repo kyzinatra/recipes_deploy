@@ -1,5 +1,4 @@
 import React, { ChangeEvent, FC } from "react";
-import { clx } from "../../../../utils/classCombine";
 
 interface IInput {
 	id: string;

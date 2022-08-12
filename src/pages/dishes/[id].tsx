@@ -1,4 +1,4 @@
-import React, { FC, MouseEvent, useEffect } from "react";
+import React, { FC, MouseEvent} from "react";
 
 import { Card } from "../../services/types";
 import { collection, getDoc, getDocs, doc } from "firebase/firestore/lite";
