@@ -1,6 +1,10 @@
 import Link from "next/link";
-import React, { FC } from "react";
+import { useRouter } from "next/router";
+import React, { FC, MouseEvent } from "react";
+import { useAppDispatch } from "../../services";
+import { setFrom } from "../../services/slices/details";
 import { Card } from "../../services/types";
+import { getEditLink } from "../../utils/getLink";
 import Button from "../Form/Button/Button";
 
 import style from "./DishCard.module.sass";
@@ -8,30 +12,43 @@ import Tab from "./Tab/Tab";
 
 interface IDishCard extends Card {}
 
-const DishCard: FC<IDishCard> = ({ date, name, dishTypes, productTypes, description, id }) => {
-	const ending = description?.length || 0 >= 255 ? "..." : "";
+const DishCard: FC<IDishCard> = (card) => {
+	const { name, dishTypes, productTypes, description, id, link } = card;
+	const ending = (description?.length || 0) >= 255 ? "..." : "";
+	const router = useRouter();
+	const dispatch = useAppDispatch();
+	function onEditHandler(e: MouseEvent) {
+		if (router.route === "/add") {
+			dispatch(setFrom({ info: { name, dishTypes, productTypes, description, link }, editId: id }));
+		} else {
+			router.push(getEditLink(card));
+		}
+	}
 	return (
-		<Link href={`/dishes/${id}`}>
-			<a className={style.card}>
-				<h2 className={style.card__title}>{name}</h2>
-				{description && (
-					<p className={style.card__content}>{description.substring(0, 255) + ending}</p>
-				)}
-				<div className="">
-					{dishTypes?.map((msg, i) => (
-						<Tab key={i}>{msg}</Tab>
-					))}
-				</div>
-				<div className="">
-					{productTypes?.map((msg, i) => (
-						<Tab key={i}>{msg}</Tab>
-					))}
-				</div>
-				<div className={style.card__link}>
-					<Button>Подробнее</Button>
-				</div>
-			</a>
-		</Link>
+		<div className={style.card}>
+			<h2 className={style.card__title}>{name}</h2>
+			{description && (
+				<p className={style.card__content}>{description.substring(0, 255) + ending}</p>
+			)}
+			<div>
+				{dishTypes?.map((msg, i) => (
+					<Tab key={i}>{msg}</Tab>
+				))}
+			</div>
+			<div>
+				{productTypes?.map((msg, i) => (
+					<Tab key={i}>{msg}</Tab>
+				))}
+			</div>
+			<div className={style.card__link}>
+				<Link href={`/dishes/${id}`}>
+					<a className={style.more}>Подробнее</a>
+				</Link>
+				<Button style="small" onClick={onEditHandler}>
+					<i className="material-icons">edit</i>
+				</Button>
+			</div>
+		</div>
 	);
 };
 

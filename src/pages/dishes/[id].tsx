@@ -14,6 +14,7 @@ import Button from "../../components/Form/Button/Button";
 import { useAppDispatch, useAppSelector } from "../../services";
 import { deleteCard } from "../../services/slices/details";
 import { ADD_TOAST } from "../../services/slices/toasts";
+import { getEditLink } from "../../utils/getLink";
 
 interface IDishes {
 	card: Card;
@@ -32,7 +33,9 @@ const Dishes: FC<IDishes> = ({ card }) => {
 			return;
 		}
 		if (typeof router.query.id == "string")
-			dispatch(deleteCard(router.query.id)).then(() => router.push("/add"));
+			dispatch(deleteCard(router.query.id)).then(
+				(res) => res.meta.requestStatus === "fulfilled" && router.push("/add")
+			);
 		else dispatch(ADD_TOAST({ code: 402, message: "Wrond input type" }));
 	}
 	return (
@@ -56,7 +59,7 @@ const Dishes: FC<IDishes> = ({ card }) => {
 						</div>
 						<div className={style.link}>
 							{card.link && <Link href={card.link}>Посмотреть рецепт</Link>}
-							<Link href={"/"}>Редактировать</Link>
+							<Link href={getEditLink(card)}>Редактировать</Link>
 							<Button load={pending} style="DELETE" onClick={clickHandler} className={style.button}>
 								Удалить карточку
 							</Button>

@@ -1,8 +1,10 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import Script from "next/script";
 import React, { FC } from "react";
+import Nav from "../Navigation/Nav/Nav";
 import Toasts from "../Toasts/Toasts";
+
+import style from "./Layout.module.sass";
 
 interface ILayout {
 	children: React.ReactNode | React.ReactNode[];
@@ -21,7 +23,10 @@ const Layout: FC<ILayout> = ({ children }) => {
 
 				<title>{title}</title>
 			</Head>
-			{children}
+			<div className={style.wrapper}>
+				<Nav />
+				{children}
+			</div>
 			<Toasts />
 		</div>
 	);

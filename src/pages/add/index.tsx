@@ -10,33 +10,24 @@ import style from "./index.module.sass";
 
 import { useAppDispatch, useAppSelector } from "../../services";
 import { ADD_TOAST } from "../../services/slices/toasts";
-import { Card, TFrom, TFromKeys, TProps } from "../../services/types";
+import { Card, TEditFrom, TFrom, TFromKeys, TProps } from "../../services/types";
 import DishCard from "../../components/DishCard/DishCard";
 import Cards from "../../components/DishCard/Cards/Cards";
 import { staticResult, TNames } from "../../services/types";
 import { collection, doc, getDoc, getDocs, limit, orderBy, query } from "firebase/firestore/lite";
 import { db } from "../../../firebase.config";
-import { GetStaticProps } from "next/types";
 
 import { fetchCard } from "../../services/slices/cards";
 import { removeSimmular } from "../../utils/find";
+import { editCard, reset, setField, setFrom } from "../../services/slices/details";
 import { useRouter } from "next/router";
 
 interface IADD extends TProps {}
 
-const initialForm = {
-	description: null,
-	dishTypes: null,
-	name: "",
-	productTypes: null,
-	link: null,
-};
-
 const ADDPAGE: FC<IADD> = ({ names, error, cards }) => {
 	const dispatch = useAppDispatch();
-	// const [addCards, setAddCards] = useState<Card[]>([]);
 	const addCards = useAppSelector((a) => a.cards.cards);
-	const [form, setForm] = useState<TFrom>(initialForm);
+	const { info: form, editId } = useAppSelector((a) => a.details);
 	const [isLoad, setLoad] = useState(false);
 	const router = useRouter();
 
@@ -52,18 +43,26 @@ const ADDPAGE: FC<IADD> = ({ names, error, cards }) => {
 	}, [names]);
 
 	function ChangeHandler(value: string | string[], name: TFromKeys) {
-		setForm((last) => {
-			return { ...last, [name]: value };
-		});
+		dispatch(setField([name, value]));
 	}
 
 	function onSubbmit(e: FormEvent<HTMLFormElement>) {
-		setLoad(true);
-		dispatch(fetchCard(form)).then(() => {
-			setForm(initialForm);
-			setLoad(false);
-		});
 		e.preventDefault();
+		setLoad(true);
+		if (!editId) {
+			dispatch(fetchCard(form)).then((res) => {
+				setLoad(false);
+				if (res.meta.requestStatus === "fulfilled") dispatch(reset());
+			});
+		} else {
+			dispatch(editCard({ info: form, editId })).then((res) => {
+				setLoad(false);
+				if (res.meta.requestStatus === "fulfilled") {
+					dispatch(reset());
+					router.push("/add");
+				}
+			});
+		}
 	}
 
 	const renderCards = useMemo(() => {
@@ -72,6 +71,14 @@ const ADDPAGE: FC<IADD> = ({ names, error, cards }) => {
 
 		return set;
 	}, [addCards, cards]);
+
+	//? EDIT
+
+	useEffect(() => {
+		if (typeof router.query.form == "string") {
+			dispatch(setFrom(JSON.parse(router.query.form) as TEditFrom));
+		}
+	}, [router]);
 
 	return (
 		<Layout materialize>
@@ -140,7 +147,7 @@ const ADDPAGE: FC<IADD> = ({ names, error, cards }) => {
 
 export default ADDPAGE;
 
-export async function getStaticProps(context: GetStaticProps) {
+export async function getStaticProps() {
 	console.log("add/getStaticProps");
 	const result: staticResult = { props: { names: null, cards: null } };
 	try {

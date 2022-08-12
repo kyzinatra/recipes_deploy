@@ -12,12 +12,22 @@ export type TCardsInitialState = {
 	reject: boolean;
 	success: boolean;
 };
-
+export type TFrom = {
+	description: null | string;
+	dishTypes: null | string[];
+	name: string;
+	productTypes: null | string[];
+	link: null | string;
+};
 export type TDetailsInitialState = {
+	editId: null | string;
+	info: TFrom;
 	pending: boolean;
 	reject: boolean;
 	success: boolean;
 };
+
+export type TEditFrom = { editId: null | string; info: TFrom };
 
 export type TNames = {
 	types: string[];
@@ -42,14 +52,6 @@ export type Card = {
 	name: string;
 	productTypes: null | string[];
 	id: string;
-};
-
-export type TFrom = {
-	description: null | string;
-	dishTypes: null | string[];
-	name: string;
-	productTypes: null | string[];
-	link: null | string;
 };
 
 export type TFromKeys = keyof TFrom;

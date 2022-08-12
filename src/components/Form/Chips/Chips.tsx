@@ -13,6 +13,7 @@ const Chips: FC<IChips> = ({ title, autocomplete, onChange, value }) => {
 	const inputRef = useRef<HTMLDivElement | null>(null);
 	const [isDocumentReady, setDocumentReady] = useState(false);
 	const ChipsData = useRef<M.Chips | null>(null);
+
 	//? Compare array to object with null keys
 	const autocompleteData = useMemo(() => {
 		if (!autocomplete) return {};
@@ -54,6 +55,7 @@ const Chips: FC<IChips> = ({ title, autocomplete, onChange, value }) => {
 
 	useEffect(() => {
 		if (!ChipsData.current || value == null) return;
+
 		const chipsArr = ChipsData.current?.chipsData.map((a) => a.tag) || null;
 		if (JSON.stringify(chipsArr) !== JSON.stringify(value)) {
 			for (let i = 0; i <= (chipsArr?.length || 0) + 1; i++) {
@@ -63,7 +65,7 @@ const Chips: FC<IChips> = ({ title, autocomplete, onChange, value }) => {
 				ChipsData.current?.addChip({ tag: el });
 			});
 		}
-	}, [ChipsData.current, value]);
+	}, [ChipsData.current, value, isDocumentReady]);
 
 	return (
 		<div>

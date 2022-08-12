@@ -1,4 +1,4 @@
-import { collection, getDocs } from "firebase/firestore/lite";
+import { collection, getDocs, orderBy, query } from "firebase/firestore/lite";
 import { db } from "../../../firebase.config";
 import { GetStaticProps } from "next";
 import React, { ChangeEvent, FC, useState } from "react";
@@ -40,7 +40,7 @@ const List: FC<IList> = ({ cards }) => {
 				) : (
 					<ul className={style.list__names}>
 						{cards?.map((el) => (
-							<li className={style["name-card"]}>
+							<li className={style["name-card"]} key={el.id}>
 								<Link href={`dishes/${el.id}`}>
 									<a href="">
 										<h2>{el.name}</h2>
@@ -57,7 +57,7 @@ const List: FC<IList> = ({ cards }) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-	const docs = await getDocs(collection(db, "cards"));
+	const docs = await getDocs(query(collection(db, "cards"), orderBy("date", "desc")));
 	let cards: Card[] = [];
 	docs.forEach((doc) => {
 		cards.push(doc.data() as Card);

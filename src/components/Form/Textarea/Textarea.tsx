@@ -21,7 +21,7 @@ const Textarea: FC<ITextarea> = ({ children, id, onChange, value }) => {
 				onChange={onChange}
 				value={value}
 			></textarea>
-			<label htmlFor={id} className={style.textarea__label}>
+			<label htmlFor={id} className={clx(style.textarea__label, value ? "active" : "")}>
 				{children}
 			</label>
 		</div>
