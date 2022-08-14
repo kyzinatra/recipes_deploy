@@ -12,7 +12,12 @@ interface ILayout {
 }
 
 const Layout: FC<ILayout> = ({ children }) => {
-	const path = useRouter()?.pathname?.split("/")?.at(-1) || "";
+	let path;
+	if (!Array.prototype.at) {
+		path = "";
+	} else {
+		path = useRouter()?.pathname?.split("/")?.at(-1) || "";
+	}
 	let title = "";
 	if (path.startsWith("[") && path.endsWith("]")) title = "Dishes";
 	else title = (path[0]?.toUpperCase() || "") + path?.substring(1) + " dishes";
