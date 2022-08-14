@@ -7,7 +7,9 @@ type Data = { error: string } | { msg: "Dish added successfully"; id: string; ca
 
 export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 	if (req.method != "POST") res.status(403).json({ error: "Only post methon access" });
-
+	res.revalidate("/add");
+	res.revalidate("/list");
+	res.revalidate("/search");
 	try {
 		const newId = uuidv4();
 		const newDish = { ...req.body, date: Date.now(), id: newId } as Card;
@@ -22,11 +24,7 @@ export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 			await setDoc(doc(db, "autocomplete", "names"), { compound, types });
 		}
 
-		res.revalidate("/add");
-		res.revalidate("/list");
-		res.revalidate("/search");
-
-		// res.revalidate(`/dishes/${newId}`);
+		res.revalidate(`/dishes/${newId}`);
 		res.status(200).json({ msg: "Dish added successfully", id: newId, card: newDish });
 	} catch (e) {
 		res.status(403).json({ error: "DB Adding Error" });
