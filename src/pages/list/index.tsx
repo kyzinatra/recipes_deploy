@@ -104,6 +104,7 @@ export const getStaticProps: GetStaticProps = async () => {
 	});
 	return {
 		props: { cards },
+		revalidate: 90,
 	};
 };
 

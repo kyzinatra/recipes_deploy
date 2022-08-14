@@ -1,4 +1,4 @@
-import React, { FC, MouseEvent} from "react";
+import React, { FC, MouseEvent } from "react";
 
 import { Card } from "../../services/types";
 import { collection, getDoc, getDocs, doc } from "firebase/firestore/lite";
@@ -78,12 +78,14 @@ export const getStaticProps: GetStaticProps = async function (context) {
 		if (typeof id != "string")
 			return {
 				props: { card: null, error: "ID type Error" },
+				revalidate: 90,
 			};
 
 		const snap = await getDoc(doc(db, "cards", id));
 		if (snap.exists()) {
 			return {
 				props: { card: snap.data() as Card },
+				revalidate: 90,
 			};
 		} else {
 			return {
@@ -91,11 +93,13 @@ export const getStaticProps: GetStaticProps = async function (context) {
 				redirect: {
 					destination: "/404",
 				},
+				revalidate: 90,
 			};
 		}
 	} catch (err) {
 		return {
 			props: { card: null, error: "Server get data error" },
+			revalidate: 90,
 		};
 	}
 };

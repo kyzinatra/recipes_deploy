@@ -99,7 +99,7 @@ export default ADDPAGE;
 
 export async function getStaticProps() {
 	console.log("add/getStaticProps");
-	const result: staticResult = { props: { names: null, cards: null } };
+	const result: staticResult = { props: { names: null, cards: null }, revalidate: 90 };
 	try {
 		const autocompleteSnap = await getDoc(doc(db, "autocomplete", "names"));
 
@@ -122,6 +122,7 @@ export async function getStaticProps() {
 	} catch (e) {
 		return {
 			props: { names: null, error: "Server side render error" },
+			revalidate: 90,
 		};
 	}
 }

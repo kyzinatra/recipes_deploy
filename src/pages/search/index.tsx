@@ -78,13 +78,16 @@ export const getStaticProps: GetStaticProps = async () => {
 		if (!names.exists())
 			return {
 				props: { cards, error: "No autocomplete names found", code: 404 },
+				revalidate: 90,
 			};
 		return {
 			props: { cards: cards, names: names.data() },
+			revalidate: 90,
 		};
 	} catch (e) {
 		return {
 			props: { error: "Server render error", code: 500 },
+			revalidate: 90,
 		};
 	}
 };

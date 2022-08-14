@@ -36,6 +36,7 @@ export type TNames = {
 
 export type staticResult = {
 	props: TProps;
+	revalidate?: number;
 };
 
 export type TProps = {

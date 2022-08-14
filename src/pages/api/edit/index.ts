@@ -6,10 +6,7 @@ type Data = { error: string } | { msg: "Dish updated successfully"; id: string; 
 
 export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 	if (req.method != "POST") res.status(403).json({ error: "Only post methon access" });
-	res.revalidate("/add");
-	res.revalidate(`/dishes/${req.body.editId}`);
-	res.revalidate("/list");
-	res.revalidate("/search");
+
 	try {
 		const body: TEdiTForm = req.body;
 		if (!body.editId) throw Error();
@@ -23,6 +20,10 @@ export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 			await setDoc(doc(db, "autocomplete", "names"), { compound, types });
 		}
 
+		res.revalidate("/add");
+		res.revalidate(`/dishes/${req.body.editId}`);
+		res.revalidate("/list");
+		res.revalidate("/search");
 		res.status(200).json({ msg: "Dish updated successfully", id: body.editId, card: newDish });
 	} catch (e) {
 		res.status(403).json({ error: "DB updating Error" });
