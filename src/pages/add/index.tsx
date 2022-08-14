@@ -42,8 +42,9 @@ const ADDPAGE: FC<IADD> = ({ names, error, cards }) => {
 
 	//? Subbmit adding
 	function onSubbmit(e: FormEvent<HTMLFormElement>) {
-		e.preventDefault();
 		setLoad(true);
+		console.log(editId);
+
 		if (!editId) {
 			dispatch(fetchCard(form)).then((res) => {
 				setLoad(false);

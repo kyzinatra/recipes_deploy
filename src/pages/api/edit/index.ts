@@ -23,7 +23,6 @@ export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 		res.revalidate("/add");
 		res.revalidate(`/dishes/${body.editId}`);
 		res.revalidate("/list");
-
 		res.revalidate("/search");
 		res.status(200).json({ msg: "Dish updated successfully", id: body.editId, card: newDish });
 	} catch (e) {

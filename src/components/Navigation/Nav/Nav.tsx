@@ -1,13 +1,16 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
+import { useAppDispatch } from "../../../services";
+import { reset } from "../../../services/slices/details";
 
 import style from "./Nav.module.sass";
 
 const Nav = () => {
 	const { route } = useRouter();
+	const dispatch = useAppDispatch();
 	return (
-		<ul className={style["nav-ul"]}>
+		<ul className={style["nav-ul"]} onClick={() => dispatch(reset())}>
 			{route != "/" && route != "/dishes/[id]" && (
 				<>
 					<li>

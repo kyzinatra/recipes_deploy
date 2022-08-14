@@ -20,6 +20,9 @@ const DishCard: FC<IDishCard> = (card) => {
 	function onEditHandler(e: MouseEvent) {
 		if (router.route === "/add") {
 			dispatch(seTForm({ info: { name, dishTypes, productTypes, description, link }, editId: id }));
+			window.scrollTo({
+				top: 0,
+			});
 		} else {
 			router.push(getEditLink(card));
 		}
