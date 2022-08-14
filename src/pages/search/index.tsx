@@ -37,9 +37,19 @@ const Search: FC<ISearch> = ({ cards, names, error, code }) => {
 
 				if (!test && query) return false;
 				if (!query) continue;
-				if (typeof test == "string" && !new RegExp(`${query}`, "gi").test(test)) return false;
-				if (typeof query == "object" && test && !query.every((tag) => test.includes(tag)))
+				if (
+					typeof test == "string" &&
+					!new RegExp(`${query.toLocaleString()}`, "gi").test(test.toLocaleLowerCase())
+				) {
 					return false;
+				}
+				if (typeof query !== "object" || typeof test !== "object") continue;
+				if (
+					test &&
+					!query.every((tag) => test.map((a) => a.toLowerCase()).includes(tag.toLocaleLowerCase()))
+				) {
+					return false;
+				}
 			}
 			return true;
 		});

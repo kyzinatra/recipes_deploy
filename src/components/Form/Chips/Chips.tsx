@@ -46,7 +46,14 @@ const Chips: FC<IChips> = ({ title, autocomplete, onChange, value }) => {
 				limit: 20,
 				secondaryPlaceholder: "+ tag",
 				placeholder: "Start typing..",
-				onChipAdd: () => onChange && onChange(data.chipsData.map((a) => a.tag)),
+				onChipAdd: () =>
+					onChange &&
+					onChange(
+						data.chipsData.map(
+							// TODO: test
+							(a) => a.tag[0].toUpperCase() + a.tag.substring(1).toLocaleLowerCase()
+						)
+					),
 				onChipDelete: () => onChange && onChange(data.chipsData.map((a) => a.tag)),
 			});
 			ChipsData.current = data;

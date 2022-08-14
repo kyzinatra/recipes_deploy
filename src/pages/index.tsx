@@ -1,5 +1,4 @@
 import React from "react";
-import { useDispatch } from "react-redux";
 import Layout from "../components/Layout/Layout";
 import Card from "../components/Navigation/Card/Card";
 import style from "./index.module.sass";
