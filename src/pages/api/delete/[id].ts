@@ -11,7 +11,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		res.revalidate("/add");
 		res.revalidate("/list");
 		res.revalidate(`/dishes/${req.query.id}`);
-		// res.revalidate("/search");
+		res.revalidate("/search");
 		res.status(200).json({ msg: "Dish deleted successfully" });
 	} catch (e) {
 		res.status(403).json({ error: "DB deliting Error" });

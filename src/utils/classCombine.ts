@@ -1,3 +1,3 @@
 export function clx(...classes: (string | undefined)[]) {
-	return classes.join(" ");
+	return classes.join(" ").trim();
 }

@@ -12,7 +12,7 @@ export type TCardsInitialState = {
 	reject: boolean;
 	success: boolean;
 };
-export type TFrom = {
+export type TForm = {
 	description: null | string;
 	dishTypes: null | string[];
 	name: string;
@@ -21,13 +21,13 @@ export type TFrom = {
 };
 export type TDetailsInitialState = {
 	editId: null | string;
-	info: TFrom;
+	info: TForm;
 	pending: boolean;
 	reject: boolean;
 	success: boolean;
 };
 
-export type TEditFrom = { editId: null | string; info: TFrom };
+export type TEdiTForm = { editId: null | string; info: TForm };
 
 export type TNames = {
 	types: string[];
@@ -54,7 +54,7 @@ export type Card = {
 	id: string;
 };
 
-export type TFromKeys = keyof TFrom;
+export type TFormKeys = keyof TForm;
 
 export type TAutocomplete = {
 	compound: string[];

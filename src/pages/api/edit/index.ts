@@ -1,14 +1,14 @@
 import { setDoc, doc, getDoc } from "firebase/firestore/lite";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { db } from "../../../../firebase.config";
-import { Card, TAutocomplete, TEditFrom } from "../../../services/types";
+import { Card, TAutocomplete, TEdiTForm } from "../../../services/types";
 type Data = { error: string } | { msg: "Dish updated successfully"; id: string; card: Card };
 
 export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 	if (req.method != "POST") res.status(403).json({ error: "Only post methon access" });
 
 	try {
-		const body: TEditFrom = req.body;
+		const body: TEdiTForm = req.body;
 		if (!body.editId) throw Error();
 		const newDish = { ...body.info, date: Date.now(), id: body.editId } as Card;
 		await setDoc(doc(db, "cards", body.editId), newDish);
@@ -24,7 +24,7 @@ export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 		res.revalidate(`/dishes/${body.editId}`);
 		res.revalidate("/list");
 
-		// res.revalidate("/search");
+		res.revalidate("/search");
 		res.status(200).json({ msg: "Dish updated successfully", id: body.editId, card: newDish });
 	} catch (e) {
 		res.status(403).json({ error: "DB updating Error" });

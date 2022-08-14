@@ -1,8 +1,4 @@
 import React, { FC, FormEvent, useEffect, useMemo, useState } from "react";
-import Button from "../../components/Form/Button/Button";
-import Chips from "../../components/Form/Chips/Chips";
-import Input from "../../components/Form/Input/Input";
-import Textarea from "../../components/Form/Textarea/Textarea";
 import Layout from "../../components/Layout/Layout";
 import DishCard from "../../components/DishCard/DishCard";
 import Cards from "../../components/DishCard/Cards/Cards";
@@ -13,15 +9,16 @@ import style from "./index.module.sass";
 
 import { useAppDispatch, useAppSelector } from "../../services";
 import { ADD_TOAST } from "../../services/slices/toasts";
-import { Card, TEditFrom, TFrom, TFromKeys, TProps } from "../../services/types";
+import { Card, TEdiTForm, TProps } from "../../services/types";
 
 import { staticResult, TNames } from "../../services/types";
 import { collection, doc, getDoc, getDocs, limit, orderBy, query } from "firebase/firestore/lite";
 import { db } from "../../../firebase.config";
 import { fetchCard } from "../../services/slices/cards";
 import { removeSimmular } from "../../utils/find";
-import { editCard, reset, setField, setFrom } from "../../services/slices/details";
+import { editCard, reset, seTForm } from "../../services/slices/details";
 import { useRouter } from "next/router";
+import Form from "../../components/Form/Form";
 
 interface IADD extends TProps {}
 
@@ -43,10 +40,7 @@ const ADDPAGE: FC<IADD> = ({ names, error, cards }) => {
 			dispatch(ADD_TOAST({ message: error || "Error", code: 500, style: "error" }));
 	}, [names]);
 
-	function ChangeHandler(value: string | string[], name: TFromKeys) {
-		dispatch(setField([name, value]));
-	}
-
+	//? Subbmit adding
 	function onSubbmit(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault();
 		setLoad(true);
@@ -73,11 +67,10 @@ const ADDPAGE: FC<IADD> = ({ names, error, cards }) => {
 		return set;
 	}, [addCards, cards]);
 
-	//? EDIT
-
+	//? IS EDIT
 	useEffect(() => {
 		if (typeof router.query.form == "string") {
-			dispatch(setFrom(JSON.parse(router.query.form) as TEditFrom));
+			dispatch(seTForm(JSON.parse(router.query.form) as TEdiTForm));
 		}
 	}, [router]);
 
@@ -86,52 +79,7 @@ const ADDPAGE: FC<IADD> = ({ names, error, cards }) => {
 			<main className={style.main}>
 				<section className={style.section}>
 					<h1 className={style.form__title}>Создайте новое блюдо!</h1>
-					<form onSubmit={onSubbmit} className={style.form}>
-						<fieldset className={clx(style.form__group, style.form__main)}>
-							<Input
-								id="title"
-								required
-								icon="account_circle"
-								value={form.name || ""}
-								onChange={(e) => ChangeHandler(e.target.value, "name")}
-							>
-								Название
-							</Input>
-							<Input
-								id="link"
-								type="url"
-								icon="link"
-								value={form.link || ""}
-								onChange={(e) => ChangeHandler(e.target.value, "link")}
-							>
-								Ссылка на рецепт
-							</Input>
-						</fieldset>
-						<Textarea
-							id="describe"
-							value={form.description || ""}
-							onChange={(e) => ChangeHandler(e.target.value, "description")}
-						>
-							Описание блюда
-						</Textarea>
-						<fieldset className={clx(style.form__group, style.form__compound)}>
-							<Chips
-								autocomplete={names?.types}
-								title="Тип блюда:"
-								value={form.dishTypes || []}
-								onChange={(e) => ChangeHandler(e, "dishTypes")}
-							/>
-							<Chips
-								autocomplete={names?.compound}
-								title="Состав:"
-								value={form.productTypes || []}
-								onChange={(e) => ChangeHandler(e, "productTypes")}
-							/>
-						</fieldset>
-						<Button type="submit" load={isLoad}>
-							Создать
-						</Button>
-					</form>
+					<Form onSubbmit={onSubbmit} names={names} isLoad={isLoad} />
 				</section>
 				<section className={clx(style.section, style.botton_margin)}>
 					<h1 className={style.form__title}>Недавно добавленные блюда:</h1>

@@ -9,6 +9,7 @@ import { Card } from "../../services/types";
 import DishCard from "../../components/DishCard/DishCard";
 import Checkbox from "../../components/Form/Input/Checkbox/Checkbox";
 import Link from "next/link";
+import Cards from "../../components/DishCard/Cards/Cards";
 
 interface IList {
 	cards?: Card[];
@@ -68,11 +69,11 @@ const List: FC<IList> = ({ cards }) => {
 					</div>
 				</section>
 				{!onlyNames ? (
-					<section className={style.list}>
+					<Cards>
 						{renderCard?.map((el) => (
 							<DishCard key={el.id} {...el} />
 						))}
-					</section>
+					</Cards>
 				) : (
 					<ul className={style.list__names}>
 						{renderCard?.map((el) => (

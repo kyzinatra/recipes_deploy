@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { postFetch } from "../../utils/api";
-import { Card, TCardsInitialState, TFrom } from "../types";
+import { Card, TCardsInitialState, TForm } from "../types";
 import { ADD_TOAST } from "./toasts";
 type Res = { id: string; msg: string; card: Card };
 
@@ -13,7 +13,7 @@ const initialState: TCardsInitialState = {
 
 const fetchCard = createAsyncThunk(
 	"cards/fetchCard",
-	async (form: TFrom, { dispatch, fulfillWithValue, rejectWithValue }) => {
+	async (form: TForm, { dispatch, fulfillWithValue, rejectWithValue }) => {
 		try {
 			const res: Res = await postFetch("api/new/dish", form);
 			dispatch(ADD_TOAST({ message: res.msg, code: 200, style: "success" }));
