@@ -1,4 +1,4 @@
-import { collection, getDocs, orderBy, query } from "firebase/firestore/lite";
+import { addDoc, collection, doc, getDocs, orderBy, query, setDoc } from "firebase/firestore/lite";
 import { db } from "../../../firebase.config";
 import { GetStaticProps } from "next";
 import React, { ChangeEvent, FC, useMemo, useState } from "react";
@@ -10,6 +10,7 @@ import DishCard from "../../components/DishCard/DishCard";
 import Checkbox from "../../components/Form/Input/Checkbox/Checkbox";
 import Link from "next/link";
 import Cards from "../../components/DishCard/Cards/Cards";
+import { readFileSync } from "fs";
 
 interface IList {
 	cards?: Card[];
@@ -50,7 +51,9 @@ const List: FC<IList> = ({ cards }) => {
 	return (
 		<Layout>
 			<main className={style.main}>
-				<h1 className={style.main__title}>Список всех блюд, добавленных на данный момент:</h1>
+				<h1 className={style.main__title}>
+					Список всех блюд, добавленных на данный момент ({renderCard.length}):
+				</h1>
 				<section className={style.settings}>
 					<h2 className={style.settings__head}>Настройки:</h2>
 					<div className={style.settings__content}>

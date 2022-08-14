@@ -14,3 +14,22 @@ const firebaseConfig = {
 
 export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
+
+/*
+	file.dishes.forEach((el) => {
+		let dishTypes: string[] | null = [
+			...(el.dishType?.split(", ") || []),
+			...(el.type?.split(", ") || []),
+		];
+		if (!dishTypes.length) dishTypes = null;
+		setDoc(doc(db, "cards", el.id), {
+			name: el.name,
+			id: el.id,
+			date: el.date,
+			description: el.description,
+			dishTypes,
+			productTypes: el.productType?.split(", ") || null,
+			link: el.link,
+		});
+	});
+*/
