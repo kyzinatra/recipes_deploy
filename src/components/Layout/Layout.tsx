@@ -13,10 +13,10 @@ interface ILayout {
 
 const Layout: FC<ILayout> = ({ children }) => {
 	let path;
-	if (!Array.prototype.at) {
-		path = "";
-	} else {
+	if (Array.prototype.at!) {
 		path = useRouter()?.pathname?.split("/")?.at(-1) || "";
+	} else {
+		path = "";
 	}
 	let title = "";
 	if (path.startsWith("[") && path.endsWith("]")) title = "Dishes";

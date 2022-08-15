@@ -16,7 +16,7 @@ import { collection, doc, getDoc, getDocs, limit, orderBy, query } from "firebas
 import { db } from "../../../firebase.config";
 import { fetchCard } from "../../services/slices/cards";
 import { removeSimmular } from "../../utils/find";
-import { editCard, reset, seTForm } from "../../services/slices/details";
+import { editCard, reset, setForm } from "../../services/slices/details";
 import { useRouter } from "next/router";
 import Form from "../../components/Form/Form";
 
@@ -25,7 +25,7 @@ interface IADD extends TProps {}
 const ADDPAGE: FC<IADD> = ({ names, error, cards }) => {
 	const dispatch = useAppDispatch();
 	const addCards = useAppSelector((a) => a.cards.cards);
-	const { info: form, editId } = useAppSelector((a) => a.details);
+	const { addForm: form, editId } = useAppSelector((a) => a.details);
 	const [isLoad, setLoad] = useState(false);
 	const router = useRouter();
 
@@ -71,7 +71,7 @@ const ADDPAGE: FC<IADD> = ({ names, error, cards }) => {
 	//? IS EDIT
 	useEffect(() => {
 		if (typeof router.query.form == "string") {
-			dispatch(seTForm(JSON.parse(router.query.form) as TEdiTForm));
+			dispatch(setForm(JSON.parse(router.query.form) as TEdiTForm));
 		}
 	}, [router]);
 

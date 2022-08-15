@@ -8,9 +8,8 @@ import style from "./Nav.module.sass";
 
 const Nav = () => {
 	const { route } = useRouter();
-	const dispatch = useAppDispatch();
 	return (
-		<ul className={style["nav-ul"]} onClick={() => dispatch(reset())}>
+		<ul className={style["nav-ul"]}>
 			{route != "/" && route != "/dishes/[id]" && (
 				<>
 					<li>

@@ -12,9 +12,8 @@ interface ICard {
 }
 
 const Card: FC<ICard> = ({ children, href }) => {
-	const dispatch = useAppDispatch();
 	return (
-		<Link href={href} onClick={() => dispatch(reset())}>
+		<Link href={href}>
 			<a className={clx(style.card, style.link)}>{children}</a>
 		</Link>
 	);

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { FC, MouseEvent } from "react";
 import { useAppDispatch } from "../../services";
-import { seTForm } from "../../services/slices/details";
+import { setForm } from "../../services/slices/details";
 import { Card } from "../../services/types";
 import { getEditLink } from "../../utils/getLink";
 import Button from "../Form/Button/Button";
@@ -19,7 +19,7 @@ const DishCard: FC<IDishCard> = (card) => {
 	const dispatch = useAppDispatch();
 	function onEditHandler(e: MouseEvent) {
 		if (router.route === "/add") {
-			dispatch(seTForm({ info: { name, dishTypes, productTypes, description, link }, editId: id }));
+			dispatch(setForm({ info: { name, dishTypes, productTypes, description, link }, editId: id }));
 			window.scrollTo({
 				top: 0,
 			});

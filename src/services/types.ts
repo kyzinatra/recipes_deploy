@@ -20,8 +20,9 @@ export type TForm = {
 	link: null | string;
 };
 export type TDetailsInitialState = {
+	addForm: TForm;
+	searchForm: TForm;
 	editId: null | string;
-	info: TForm;
 	pending: boolean;
 	reject: boolean;
 	success: boolean;

@@ -4,7 +4,8 @@ import { Card, TDetailsInitialState, TEdiTForm, TFormKeys } from "../types";
 import { ADD_TOAST } from "./toasts";
 
 const initialState: TDetailsInitialState = {
-	info: { description: null, dishTypes: null, name: "", productTypes: null, link: null },
+	addForm: { description: null, dishTypes: null, name: "", productTypes: null, link: null },
+	searchForm: { description: null, dishTypes: null, name: "", productTypes: null, link: null },
 	editId: null,
 	pending: false,
 	reject: false,
@@ -51,20 +52,24 @@ const details = createSlice({
 	name: "details",
 	initialState,
 	reducers: {
-		seTForm: (state, action: PayloadAction<TEdiTForm>) => {
+		setForm: (state, action: PayloadAction<TEdiTForm>) => {
 			return { ...state, ...action.payload };
 		},
-		setField: (state, action: PayloadAction<[TFormKeys, string | null | string[]]>) => {
+		setField: (
+			state,
+			action: PayloadAction<[TFormKeys, string | null | string[], "addForm" | "searchForm"]>
+		) => {
+			const field = action.payload[2];
 			return {
 				...state,
-				info: {
-					...state.info,
+				[field]: {
+					...state[field],
 					[action.payload[0]]: action.payload[1],
 				},
 			};
 		},
 		reset: (state) => {
-			return { ...state, info: initialState.info };
+			return { ...state, addForm: initialState.addForm, searchForm: initialState.searchForm };
 		},
 		setEdit: (state, action: PayloadAction<string>) => {
 			return { ...state, editId: action.payload };
@@ -93,7 +98,7 @@ const details = createSlice({
 	},
 });
 
-export const { setField, reset, seTForm, setEdit } = details.actions;
+export const { setField, reset, setForm, setEdit } = details.actions;
 export { deleteCard, editCard };
 
 export const detailsReducer = details.reducer;

@@ -21,7 +21,7 @@ interface ISearch {
 }
 
 const Search: FC<ISearch> = ({ cards, names, error, code }) => {
-	const { info: form } = useAppSelector((a) => a.details);
+	const { searchForm: form } = useAppSelector((a) => a.details);
 	const dispatch = useAppDispatch();
 	useEffect(() => {
 		if (error && code) {

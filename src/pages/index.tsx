@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Layout from "../components/Layout/Layout";
 import Card from "../components/Navigation/Card/Card";
 import style from "./index.module.sass";
 
 const Main = () => {
+	useEffect(() => {
+		fetch("api/revalidate/add");
+	}, []);
 	return (
 		<Layout>
 			<main className={style.main}>

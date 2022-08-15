@@ -1,4 +1,4 @@
-import React, { FC, FormEvent, useCallback, useEffect, useMemo, useState } from "react";
+import React, { FC, FormEvent, useCallback } from "react";
 import Button from "../../components/Form/Button/Button";
 import Chips from "../../components/Form/Chips/Chips";
 import Input from "../../components/Form/Input/Input";
@@ -7,10 +7,11 @@ import Textarea from "../../components/Form/Textarea/Textarea";
 import { clx } from "../../utils/classCombine";
 
 import { useAppDispatch, useAppSelector } from "../../services";
-import { TFormKeys, TNames } from "../../services/types";
+import { TForm, TFormKeys, TNames } from "../../services/types";
 import { setField } from "../../services/slices/details";
 
 import style from "./Form.module.sass";
+import { useRouter } from "next/router";
 interface IForm {
 	onSubbmit?: (e: FormEvent<HTMLFormElement>) => any;
 	names: TNames | null;
@@ -20,10 +21,13 @@ interface IForm {
 
 const Form: FC<IForm> = ({ onSubbmit, names, isLoad, cantSubbmit }) => {
 	const dispatch = useAppDispatch();
-	const { info: form } = useAppSelector((a) => a.details);
-
+	const router = useRouter();
+	const form = useAppSelector((a) =>
+		router.route == "/add" ? a.details.addForm : a.details.searchForm
+	);
 	function ChangeHandler(value: string | string[], name: TFormKeys) {
-		dispatch(setField([name, value]));
+		if (router.route === "/add") dispatch(setField([name, value, "addForm"]));
+		else dispatch(setField([name, value, "searchForm"]));
 	}
 
 	const subbmitFunction = useCallback(
