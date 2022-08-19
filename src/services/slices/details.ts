@@ -71,6 +71,9 @@ const details = createSlice({
 		reset: (state) => {
 			return { ...state, addForm: initialState.addForm, searchForm: initialState.searchForm };
 		},
+		resetEditId: (state) => {
+			return { ...state, editId: null };
+		},
 		setEdit: (state, action: PayloadAction<string>) => {
 			return { ...state, editId: action.payload };
 		},
@@ -98,7 +101,7 @@ const details = createSlice({
 	},
 });
 
-export const { setField, reset, setForm, setEdit } = details.actions;
+export const { setField, reset, setForm, setEdit, resetEditId } = details.actions;
 export { deleteCard, editCard };
 
 export const detailsReducer = details.reducer;

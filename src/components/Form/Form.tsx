@@ -1,4 +1,4 @@
-import React, { FC, FormEvent, useCallback } from "react";
+import React, { FC, FormEvent, useCallback, MouseEvent } from "react";
 import Button from "../../components/Form/Button/Button";
 import Chips from "../../components/Form/Chips/Chips";
 import Input from "../../components/Form/Input/Input";
@@ -7,8 +7,8 @@ import Textarea from "../../components/Form/Textarea/Textarea";
 import { clx } from "../../utils/classCombine";
 
 import { useAppDispatch, useAppSelector } from "../../services";
-import { TForm, TFormKeys, TNames } from "../../services/types";
-import { setField } from "../../services/slices/details";
+import { TFormKeys, TNames } from "../../services/types";
+import { reset, setField, resetEditId } from "../../services/slices/details";
 
 import style from "./Form.module.sass";
 import { useRouter } from "next/router";
@@ -17,9 +17,10 @@ interface IForm {
 	names: TNames | null;
 	isLoad?: boolean;
 	cantSubbmit?: boolean;
+	isEdit?: boolean;
 }
 
-const Form: FC<IForm> = ({ onSubbmit, names, isLoad, cantSubbmit }) => {
+const Form: FC<IForm> = ({ onSubbmit, names, isLoad, cantSubbmit, isEdit }) => {
 	const dispatch = useAppDispatch();
 	const router = useRouter();
 	const form = useAppSelector((a) =>
@@ -37,6 +38,10 @@ const Form: FC<IForm> = ({ onSubbmit, names, isLoad, cantSubbmit }) => {
 		},
 		[onSubbmit, cantSubbmit]
 	);
+	const resetHendler = (e: MouseEvent) => {
+		dispatch(reset());
+		dispatch(resetEditId());
+	};
 	return (
 		<form onSubmit={subbmitFunction} className={style.form}>
 			<fieldset className={clx(style.form__group, style.form__main)}>
@@ -81,9 +86,16 @@ const Form: FC<IForm> = ({ onSubbmit, names, isLoad, cantSubbmit }) => {
 				/>
 			</fieldset>
 			{!cantSubbmit && (
-				<Button type="submit" load={isLoad}>
-					Создать
-				</Button>
+				<div className={style.form__buttons}>
+					<Button className={style.form__subbmit} type="submit" load={isLoad}>
+						{isEdit ? "Сохранить" : "Создать"}
+					</Button>
+					{isEdit && (
+						<Button className={style.form__clear} onClick={resetHendler} load={isLoad}>
+							Сбросить
+						</Button>
+					)}
+				</div>
 			)}
 		</form>
 	);

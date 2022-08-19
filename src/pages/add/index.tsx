@@ -79,8 +79,12 @@ const ADDPAGE: FC<IADD> = ({ names, error, cards }) => {
 		<Layout materialize>
 			<main className={style.main}>
 				<section className={style.section}>
-					<h1 className={style.form__title}>Создайте новое блюдо!</h1>
-					<Form onSubbmit={onSubbmit} names={names} isLoad={isLoad} />
+					<h1 className={style.form__title}>
+						{editId
+							? `Отредактируй блюдо! (${editId.substring(0, 5).toUpperCase()})`
+							: "Создайте новое блюдо!"}
+					</h1>
+					<Form isEdit={!!editId} onSubbmit={onSubbmit} names={names} isLoad={isLoad} />
 				</section>
 				<section className={clx(style.section, style.botton_margin)}>
 					<h1 className={style.form__title}>Недавно добавленные блюда:</h1>
