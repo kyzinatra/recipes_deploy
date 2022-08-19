@@ -51,7 +51,7 @@ const ADDPAGE: FC<IADD> = ({ names, error, cards }) => {
 				if (res.meta.requestStatus === "fulfilled") dispatch(reset());
 			});
 		} else {
-			dispatch(editCard({ info: form, editId })).then((res) => {
+			dispatch(editCard({ addForm: form, editId })).then((res) => {
 				setLoad(false);
 				if (res.meta.requestStatus === "fulfilled") {
 					dispatch(reset());

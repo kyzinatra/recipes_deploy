@@ -7,13 +7,6 @@ const chechRes = async (res: Response) => {
 };
 
 export async function postFetch(url: string, body: Object) {
-	console.log(body);
-	try {
-		console.log(JSON.stringify(body));
-	} catch (e) {
-		console.log("AAAAAAAAAAAAAAAAAAAAA", e);
-		console.log(body);
-	}
 	return fetch(url, {
 		method: "POST",
 		redirect: "follow",

@@ -28,7 +28,7 @@ export type TDetailsInitialState = {
 	success: boolean;
 };
 
-export type TEdiTForm = { editId: null | string; info: TForm };
+export type TEdiTForm = { editId: null | string; addForm?: TForm; searchForm?: TForm };
 
 export type TNames = {
 	types: string[];

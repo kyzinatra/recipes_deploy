@@ -10,7 +10,7 @@ export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 	try {
 		const body: TEdiTForm = req.body;
 		if (!body.editId) throw Error();
-		const newDish = { ...body.info, date: Date.now(), id: body.editId } as Card;
+		const newDish = { ...body.addForm, date: Date.now(), id: body.editId } as Card;
 		await setDoc(doc(db, "cards", body.editId), newDish);
 		const autocompleteSnap = await getDoc(doc(db, "autocomplete", "names"));
 		if (autocompleteSnap.exists()) {

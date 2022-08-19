@@ -19,7 +19,9 @@ const DishCard: FC<IDishCard> = (card) => {
 	const dispatch = useAppDispatch();
 	function onEditHandler(e: MouseEvent) {
 		if (router.route === "/add") {
-			dispatch(setForm({ info: { name, dishTypes, productTypes, description, link }, editId: id }));
+			dispatch(
+				setForm({ addForm: { name, dishTypes, productTypes, description, link }, editId: id })
+			);
 			window.scrollTo({
 				top: 0,
 			});
