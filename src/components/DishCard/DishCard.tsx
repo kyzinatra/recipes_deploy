@@ -6,6 +6,7 @@ import { setForm } from "../../services/slices/details";
 import { Card } from "../../services/types";
 import { getEditLink } from "../../utils/getLink";
 import Button from "../Form/Button/Button";
+import Rating from "../Form/Rating/Rating";
 
 import style from "./DishCard.module.sass";
 import Tab from "./Tab/Tab";
@@ -13,7 +14,7 @@ import Tab from "./Tab/Tab";
 interface IDishCard extends Card {}
 
 const DishCard: FC<IDishCard> = (card) => {
-	const { name, dishTypes, productTypes, description, id, link } = card;
+	const { name, dishTypes, productTypes, description, id, link, difficulty } = card;
 	const ending = (description?.length || 0) >= 255 ? "..." : "";
 	const router = useRouter();
 	const dispatch = useAppDispatch();
@@ -44,6 +45,13 @@ const DishCard: FC<IDishCard> = (card) => {
 				{productTypes?.map((msg, i) => (
 					<Tab key={i}>{msg}</Tab>
 				))}
+			</div>
+			<div>
+				{difficulty && (
+					<Rating size="1.1" value={difficulty} disabled>
+						Сложность:
+					</Rating>
+				)}
 			</div>
 			<div className={style.card__link}>
 				<Link href={`/dishes/${id}`}>

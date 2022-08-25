@@ -18,6 +18,7 @@ export type TForm = {
 	name: string;
 	productTypes: null | string[];
 	link: null | string;
+	difficulty?: number | null;
 };
 export type TDetailsInitialState = {
 	addForm: TForm;
@@ -54,6 +55,7 @@ export type Card = {
 	name: string;
 	productTypes: null | string[];
 	id: string;
+	difficulty?: number | null;
 };
 
 export type TFormKeys = keyof TForm;

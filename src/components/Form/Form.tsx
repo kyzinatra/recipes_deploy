@@ -12,6 +12,7 @@ import { reset, setField, resetEditId } from "../../services/slices/details";
 
 import style from "./Form.module.sass";
 import { useRouter } from "next/router";
+import Rating from "./Rating/Rating";
 interface IForm {
 	onSubbmit?: (e: FormEvent<HTMLFormElement>) => any;
 	names: TNames | null;
@@ -26,7 +27,7 @@ const Form: FC<IForm> = ({ onSubbmit, names, isLoad, cantSubbmit, isEdit }) => {
 	const form = useAppSelector((a) =>
 		router.route == "/add" ? a.details.addForm : a.details.searchForm
 	);
-	function ChangeHandler(value: string | string[], name: TFormKeys) {
+	function ChangeHandler(value: string | string[] | number, name: TFormKeys) {
 		if (router.route === "/add") dispatch(setField([name, value, "addForm"]));
 		else dispatch(setField([name, value, "searchForm"]));
 	}
@@ -52,7 +53,7 @@ const Form: FC<IForm> = ({ onSubbmit, names, isLoad, cantSubbmit, isEdit }) => {
 					value={form.name || ""}
 					onChange={(e) => ChangeHandler(e.target.value, "name")}
 				>
-					Название
+					Название*
 				</Input>
 				<Input
 					id="link"
@@ -84,6 +85,11 @@ const Form: FC<IForm> = ({ onSubbmit, names, isLoad, cantSubbmit, isEdit }) => {
 					value={form.productTypes || []}
 					onChange={(e) => ChangeHandler(e, "productTypes")}
 				/>
+			</fieldset>
+			<fieldset className={clx(style.form__group)}>
+				<Rating value={form.difficulty || -1} onChange={(e) => ChangeHandler(e, "difficulty")}>
+					Сложность:
+				</Rating>
 			</fieldset>
 			{!cantSubbmit && (
 				<div className={style.form__buttons}>

@@ -4,8 +4,22 @@ import { Card, TDetailsInitialState, TEdiTForm, TFormKeys } from "../types";
 import { ADD_TOAST } from "./toasts";
 
 const initialState: TDetailsInitialState = {
-	addForm: { description: null, dishTypes: null, name: "", productTypes: null, link: null },
-	searchForm: { description: null, dishTypes: null, name: "", productTypes: null, link: null },
+	addForm: {
+		description: null,
+		dishTypes: null,
+		name: "",
+		productTypes: null,
+		link: null,
+		difficulty: null,
+	},
+	searchForm: {
+		description: null,
+		dishTypes: null,
+		name: "",
+		productTypes: null,
+		link: null,
+		difficulty: null,
+	},
 	editId: null,
 	pending: false,
 	reject: false,
@@ -57,7 +71,9 @@ const details = createSlice({
 		},
 		setField: (
 			state,
-			action: PayloadAction<[TFormKeys, string | null | string[], "addForm" | "searchForm"]>
+			action: PayloadAction<
+				[TFormKeys, string | null | string[] | number, "addForm" | "searchForm"]
+			>
 		) => {
 			const field = action.payload[2];
 			return {
