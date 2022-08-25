@@ -15,6 +15,7 @@ import { useAppDispatch, useAppSelector } from "../../services";
 import { deleteCard } from "../../services/slices/details";
 import { ADD_TOAST } from "../../services/slices/toasts";
 import { getEditLink } from "../../utils/getLink";
+import Rating from "../../components/Form/Rating/Rating";
 
 interface IDishes {
 	card: Card;
@@ -46,7 +47,12 @@ const Dishes: FC<IDishes> = ({ card }) => {
 				) : (
 					<div className={style.card}>
 						<h1>{card.name}</h1>
-						<p>{card.description}</p>
+						{card.description && (
+							<div>
+								<Rating size="1.5" value={card.difficulty || -1} disabled />
+							</div>
+						)}
+						{card.description && <p>{card.description}</p>}
 						<div>
 							{card.dishTypes?.map((el, i) => (
 								<Tab key={i}>{el}</Tab>
