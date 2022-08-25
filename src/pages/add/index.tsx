@@ -62,10 +62,10 @@ const ADDPAGE: FC<IADD> = ({ names, error, cards }) => {
 	}
 
 	const renderCards = useMemo(() => {
-		const combine = [...addCards, ...(cards || [])].splice(0, 5);
+		const combine = [...addCards, ...(cards || [])];
 		const set = removeSimmular(combine) as Card[];
 
-		return set;
+		return set.splice(0, 5);
 	}, [addCards, cards]);
 
 	//? IS EDIT
@@ -74,7 +74,6 @@ const ADDPAGE: FC<IADD> = ({ names, error, cards }) => {
 			dispatch(setForm(JSON.parse(router.query.form) as TEdiTForm));
 		}
 	}, [router]);
-
 	return (
 		<Layout materialize>
 			<main className={style.main}>

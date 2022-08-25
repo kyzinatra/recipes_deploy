@@ -12,6 +12,8 @@ import Cards from "../../components/DishCard/Cards/Cards";
 import DishCard from "../../components/DishCard/DishCard";
 
 import style from "./index.module.sass";
+import Button from "../../components/Form/Button/Button";
+import { reset } from "../../services/slices/details";
 
 interface ISearch {
 	cards: Card[];
@@ -32,24 +34,26 @@ const Search: FC<ISearch> = ({ cards, names, error, code }) => {
 		return cards.filter((card) => {
 			const keys = Object.keys(form) as (keyof TForm)[];
 			for (let i = 0; i < keys.length; i++) {
-				const test = card[keys[i]];
+				const data = card[keys[i]];
 				const query = form[keys[i]];
 
-				if (!test && query) return false;
-				if (!query) continue;
-				if (
-					typeof test == "string" &&
-					!new RegExp(`${query.toLocaleString()}`, "gi").test(test.toLocaleLowerCase())
-				) {
+				if (data === null && query) return false; //? Exclude cards without searching field
+				if (!query) continue; //? continue if no query in the field
+
+				if (typeof data == "object" && data && typeof query == "object") {
+					//? if data is array
+					if (
+						!query.every((tag) =>
+							data.map((a) => a.toLowerCase()).includes(tag.toLocaleLowerCase())
+						)
+					)
+						return false;
+				} else if (
+					!new RegExp(`${query?.toString()?.toLocaleString()}`, "gi").test(
+						data?.toString().toLocaleLowerCase() || ""
+					)
+				)
 					return false;
-				}
-				if (typeof query !== "object" || typeof test !== "object") continue;
-				if (
-					test &&
-					!query.every((tag) => test.map((a) => a.toLowerCase()).includes(tag.toLocaleLowerCase()))
-				) {
-					return false;
-				}
 			}
 			return true;
 		});
@@ -61,6 +65,7 @@ const Search: FC<ISearch> = ({ cards, names, error, code }) => {
 				<section className={style.search__section}>
 					<h1>Введите данные для поиска бюлюда: </h1>
 					<Form cantSubbmit names={names} />
+					<Button onClick={() => dispatch(reset())}>Сбросить</Button>
 				</section>
 				<section className={style.search__section}>
 					<h1>Результаты поиска:</h1>

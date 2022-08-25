@@ -33,6 +33,7 @@ const DishCard: FC<IDishCard> = (card) => {
 	return (
 		<div className={style.card}>
 			<h2 className={style.card__title}>{name}</h2>
+			<div>{difficulty && <Rating size="1.1" value={difficulty} disabled />}</div>
 			{description && (
 				<p className={style.card__content}>{description.substring(0, 255) + ending}</p>
 			)}
@@ -46,13 +47,7 @@ const DishCard: FC<IDishCard> = (card) => {
 					<Tab key={i}>{msg}</Tab>
 				))}
 			</div>
-			<div>
-				{difficulty && (
-					<Rating size="1.1" value={difficulty} disabled>
-						Сложность:
-					</Rating>
-				)}
-			</div>
+
 			<div className={style.card__link}>
 				<Link href={`/dishes/${id}`}>
 					<a className={style.more}>Подробнее</a>
