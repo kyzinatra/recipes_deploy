@@ -15,7 +15,7 @@ import { collection, doc, getDoc, getDocs, limit, orderBy, query } from "firebas
 import { db } from "../../../firebase.config";
 import { fetchCard } from "../../services/slices/cards";
 import { removeSimmular } from "../../utils/find";
-import { editCard, reset, setForm } from "../../services/slices/details";
+import { editCard, reset, resetEditId, setForm } from "../../services/slices/details";
 import { useRouter } from "next/router";
 import Form from "../../components/Form/Form";
 import { useFeedback } from "../../hooks/useFeedback";
@@ -35,7 +35,6 @@ const ADDPAGE: FC<IADD> = ({ names, error, cards, code }) => {
 	//? Subbmit adding
 	function onSubbmit(e: FormEvent<HTMLFormElement>) {
 		setLoad(true);
-		console.log(editId);
 
 		if (!editId) {
 			dispatch(fetchCard(form)).then((res) => {
@@ -47,6 +46,7 @@ const ADDPAGE: FC<IADD> = ({ names, error, cards, code }) => {
 				setLoad(false);
 				if (res.meta.requestStatus === "fulfilled") {
 					dispatch(reset());
+					dispatch(resetEditId());
 					router.push("/add");
 				}
 			});
