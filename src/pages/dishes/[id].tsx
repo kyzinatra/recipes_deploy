@@ -16,16 +16,21 @@ import { deleteCard } from "../../services/slices/details";
 import { ADD_TOAST } from "../../services/slices/toasts";
 import { getEditLink } from "../../utils/getLink";
 import Rating from "../../components/Form/Rating/Rating";
+import { useFeedback } from "../../hooks/useFeedback";
 
 interface IDishes {
 	card: Card;
+	error?: string;
+	code?: number;
 }
 
-const Dishes: FC<IDishes> = ({ card }) => {
+const Dishes: FC<IDishes> = ({ card, error, code }) => {
 	const router = useRouter();
 	const dispatch = useAppDispatch();
 	const { pending } = useAppSelector((state) => state.details);
-	function clickHandler(event: MouseEvent) {
+	useFeedback(error, code);
+
+	function clickHandler() {
 		const comfirm = confirm(
 			"Вы действительно хотите удалить эту карточку.\nЭто действие нельзя будет отменить"
 		);
@@ -47,7 +52,7 @@ const Dishes: FC<IDishes> = ({ card }) => {
 				) : (
 					<div className={style.card}>
 						<h1>{card.name}</h1>
-						{card.description && (
+						{card.difficulty && (
 							<div>
 								<Rating size="1.5" value={card.difficulty || -1} disabled />
 							</div>
@@ -83,7 +88,7 @@ export const getStaticProps: GetStaticProps = async function (context) {
 		const id = context.params?.id;
 		if (typeof id != "string")
 			return {
-				props: { card: null, error: "ID type Error" },
+				props: { card: null, error: "ID type Error", code: 405 },
 				revalidate: 90,
 			};
 
@@ -104,7 +109,7 @@ export const getStaticProps: GetStaticProps = async function (context) {
 		}
 	} catch (err) {
 		return {
-			props: { card: null, error: "Server get data error" },
+			props: { card: null, error: "Server get data error", code: 500 },
 			revalidate: 90,
 		};
 	}

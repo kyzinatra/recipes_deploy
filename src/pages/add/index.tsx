@@ -8,8 +8,7 @@ import { clx } from "../../utils/classCombine";
 import style from "./index.module.sass";
 
 import { useAppDispatch, useAppSelector } from "../../services";
-import { ADD_TOAST } from "../../services/slices/toasts";
-import { Card, TEdiTForm, TProps } from "../../services/types";
+import { Card, TEditForm, TProps } from "../../services/types";
 
 import { staticResult, TNames } from "../../services/types";
 import { collection, doc, getDoc, getDocs, limit, orderBy, query } from "firebase/firestore/lite";
@@ -19,10 +18,11 @@ import { removeSimmular } from "../../utils/find";
 import { editCard, reset, setForm } from "../../services/slices/details";
 import { useRouter } from "next/router";
 import Form from "../../components/Form/Form";
+import { useFeedback } from "../../hooks/useFeedback";
 
 interface IADD extends TProps {}
 
-const ADDPAGE: FC<IADD> = ({ names, error, cards }) => {
+const ADDPAGE: FC<IADD> = ({ names, error, cards, code }) => {
 	const dispatch = useAppDispatch();
 	const addCards = useAppSelector((a) => a.cards.cards);
 	const { addForm: form, editId } = useAppSelector((a) => a.details);
@@ -30,15 +30,7 @@ const ADDPAGE: FC<IADD> = ({ names, error, cards }) => {
 	const router = useRouter();
 
 	//? user feedback
-	useEffect(() => {
-		if (
-			names === null &&
-			(error == "Autocomplete is empty" || error == "We didn't find any cards :(")
-		)
-			dispatch(ADD_TOAST({ message: error, code: 404, style: "warning" }));
-		else if (names === null)
-			dispatch(ADD_TOAST({ message: error || "Error", code: 500, style: "error" }));
-	}, [names]);
+	useFeedback(error, code);
 
 	//? Subbmit adding
 	function onSubbmit(e: FormEvent<HTMLFormElement>) {
@@ -71,7 +63,7 @@ const ADDPAGE: FC<IADD> = ({ names, error, cards }) => {
 	//? IS EDIT
 	useEffect(() => {
 		if (typeof router.query.form == "string") {
-			dispatch(setForm(JSON.parse(router.query.form) as TEdiTForm));
+			dispatch(setForm(JSON.parse(router.query.form) as TEditForm));
 		}
 	}, [router]);
 	return (
@@ -124,7 +116,7 @@ export async function getStaticProps() {
 		return result;
 	} catch (e) {
 		return {
-			props: { names: null, error: "Server side render error" },
+			props: { names: null, error: "Server side render error", code: 500 },
 			revalidate: 90,
 		};
 	}

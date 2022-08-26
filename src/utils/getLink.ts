@@ -1,7 +1,7 @@
-import { Card } from "../services/types";
+import { Card, TEditForm } from "../services/types";
 
-export function getEditLink(card: Card) {
-	const { id, description, dishTypes, name, productTypes, link } = card;
+export function getEditLink(card: Card): string {
+	const { id, description, dishTypes, name, productTypes, link, difficulty } = card;
 	return `/add/?form=${JSON.stringify({
 		editId: id,
 		addForm: {
@@ -10,6 +10,7 @@ export function getEditLink(card: Card) {
 			name,
 			productTypes,
 			link,
+			difficulty: difficulty || null,
 		},
 	})}`;
 }

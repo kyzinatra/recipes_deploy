@@ -14,6 +14,7 @@ import DishCard from "../../components/DishCard/DishCard";
 import style from "./index.module.sass";
 import Button from "../../components/Form/Button/Button";
 import { reset } from "../../services/slices/details";
+import { useFeedback } from "../../hooks/useFeedback";
 
 interface ISearch {
 	cards: Card[];
@@ -25,11 +26,7 @@ interface ISearch {
 const Search: FC<ISearch> = ({ cards, names, error, code }) => {
 	const { searchForm: form } = useAppSelector((a) => a.details);
 	const dispatch = useAppDispatch();
-	useEffect(() => {
-		if (error && code) {
-			dispatch(ADD_TOAST({ message: error, code, style: "error" }));
-		}
-	}, [error]);
+	useFeedback(error, code);
 	const renderCards = useMemo(() => {
 		return cards.filter((card) => {
 			const keys = Object.keys(form) as (keyof TForm)[];

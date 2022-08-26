@@ -29,7 +29,7 @@ export type TDetailsInitialState = {
 	success: boolean;
 };
 
-export type TEdiTForm = { editId: null | string; addForm?: TForm; searchForm?: TForm };
+export type TEditForm = { editId: null | string; addForm?: TForm; searchForm?: TForm };
 
 export type TNames = {
 	types: string[];
@@ -45,6 +45,7 @@ export type TProps = {
 	names: null | TNames;
 	cards: null | Card[];
 	error?: string;
+	code?: number;
 };
 
 export type Card = {

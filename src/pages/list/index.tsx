@@ -11,16 +11,20 @@ import Checkbox from "../../components/Form/Input/Checkbox/Checkbox";
 import Link from "next/link";
 import Cards from "../../components/DishCard/Cards/Cards";
 import { readFileSync } from "fs";
+import { useFeedback } from "../../hooks/useFeedback";
 
 interface IList {
 	cards?: Card[];
+	error?: string;
+	code?: number;
 }
 
-const List: FC<IList> = ({ cards }) => {
+const List: FC<IList> = ({ cards, error, code }) => {
 	const [onlyNames, setOnlyNames] = useState(false);
 	const [byName, setByName] = useState(false);
 	const [onlyDesc, setonlyDesc] = useState(false);
 	const [onlyRec, setOnlyRec] = useState(false);
+	useFeedback(error, code);
 
 	function onChangeHandler(e: ChangeEvent<HTMLInputElement>) {
 		switch (e.target.id) {
@@ -97,15 +101,22 @@ const List: FC<IList> = ({ cards }) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-	const docs = await getDocs(query(collection(db, "cards"), orderBy("date", "desc")));
-	let cards: Card[] = [];
-	docs.forEach((doc) => {
-		cards.push(doc.data() as Card);
-	});
-	return {
-		props: { cards },
-		revalidate: 90,
-	};
+	try {
+		const docs = await getDocs(query(collection(db, "cards"), orderBy("date", "desc")));
+		let cards: Card[] = [];
+		docs.forEach((doc) => {
+			cards.push(doc.data() as Card);
+		});
+		return {
+			props: { cards },
+			revalidate: 90,
+		};
+	} catch (e) {
+		return {
+			props: { error: "Catch error in the db fatching" },
+			revalidate: 90,
+		};
+	}
 };
 
 export default List;

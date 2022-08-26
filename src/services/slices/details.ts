@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { deleteFetch, postFetch } from "../../utils/api";
-import { Card, TDetailsInitialState, TEdiTForm, TFormKeys } from "../types";
+import { Card, TDetailsInitialState, TEditForm, TFormKeys } from "../types";
 import { ADD_TOAST } from "./toasts";
 
 const initialState: TDetailsInitialState = {
@@ -47,7 +47,7 @@ const deleteCard = createAsyncThunk(
 
 const editCard = createAsyncThunk(
 	"details/editCard",
-	async (form: TEdiTForm, { dispatch, rejectWithValue }) => {
+	async (form: TEditForm, { dispatch, rejectWithValue }) => {
 		try {
 			const res: Res = await postFetch("../api/edit/", form);
 			dispatch(ADD_TOAST({ message: res.msg, code: 200, style: "success" }));
@@ -66,7 +66,7 @@ const details = createSlice({
 	name: "details",
 	initialState,
 	reducers: {
-		setForm: (state, action: PayloadAction<TEdiTForm>) => {
+		setForm: (state, action: PayloadAction<TEditForm>) => {
 			return { ...state, ...action.payload };
 		},
 		setField: (
