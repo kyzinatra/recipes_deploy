@@ -93,7 +93,7 @@ export const getStaticProps: GetStaticProps = async () => {
 				revalidate: 90,
 			};
 		return {
-			props: { cards: cards, names: names.data() },
+			props: { cards, names: names.data() },
 			revalidate: 90,
 		};
 	} catch (e) {

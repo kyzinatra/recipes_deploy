@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import Nav from "../Navigation/Nav/Nav";
 import Toasts from "../Toasts/Toasts";
 
@@ -12,6 +12,14 @@ interface ILayout {
 }
 
 const Layout: FC<ILayout> = ({ children }) => {
+	useEffect(() => {
+		if ("serviceWorker" in navigator) {
+			navigator.serviceWorker.register("/sw.js").then((event) => {
+				console.log("Service worker registered", event);
+			});
+		}
+	}, []);
+
 	let path;
 	if (Array.prototype.at!) {
 		path = useRouter()?.pathname?.split("/")?.at(-1) || "";

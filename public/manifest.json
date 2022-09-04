@@ -1,0 +1,17 @@
+{
+	"name": "Recipes",
+	"short_name": "Recipes",
+	"theme_color": "#ffffff",
+	"background_color": "#ffffff",
+	"display": "standalone",
+	"description": "Recipes of your life for your live",
+	"scope": "/",
+	"start_url": "/",
+	"icons": [
+		{
+			"src": "favicon.png",
+			"type": "image/png",
+			"sizes": "512x512"
+		}
+	]
+}
